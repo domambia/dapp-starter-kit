@@ -3,10 +3,11 @@ import {DeployFunction} from 'hardhat-deploy/types';
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const {deployments, getNamedAccounts} = hre;
-  console.log(getNamedAccounts());
   const {deploy} = deployments;
 
   const {deployer, tokenOwner} = await getNamedAccounts();
+
+  console.log("Deployer", deployer)
 
   await deploy('Token', {
     from: deployer,

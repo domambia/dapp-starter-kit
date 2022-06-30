@@ -4,22 +4,32 @@ import "@nomiclabs/hardhat-waffle";
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
 import {config as dotEnv }  from  "dotenv"
+import {node_url, accounts}  from  "./utils/network"
 // setup .env.local file and load all env variables
 dotEnv({path: "./../../.env.local"})
 
-const PRIVATE_KEY  = process.env.PRIVATE_KEY!
-const INFURA_API_KEY  = process.env.INFURA_API_KEY!
-
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
+  namedAccounts: {
+    deployer: 0,
+    tokenOwner: 1,
+  },
+
   networks: {
     rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${{INFURA_API_KEY}}`,
-      accounts: [`${PRIVATE_KEY}`],
+      url: node_url('rinkeby'),
+      accounts: accounts('rinkeby'),
+      gas: 1000000
     },
-    mainnet: {
-      url: `https://rinkeby.infura.io/v3/${{INFURA_API_KEY}}`,
-      accounts: [`${PRIVATE_KEY}`],
+    goerli: {
+      url: node_url('goerli'),
+      accounts: accounts('goerli'),
+      gas: 500000
+    },
+    localhost: {
+      url: node_url('localhost'),
+      accounts: accounts('localhost'),
+      gas: 1000000
     },
   },
   paths: {
